@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>태그 자체에서 폼 검증하기</title>
+
+    <style>
+        .error-message{
+            display: none;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form onsubmit="return validateForm()">
+        <label for="email">Email : </label>
+        <input type="email" id="email" name="email" required>
+        <button type="submit">Submit</button>
+        <p id="error-message" class="error-message">올바른 이메일 주소를 입력해주세요.</p>
+    </form>
+
+    <script>
+        function validateForm() {
+            const emailInput = document.getElementById("email");
+            const errorMessage = document.getElementById("error-message");
+            // 사용자가 입력한 이메일 주소
+            const email = emailInput.value; //emailInput에 입력하는 value값을 email에 담음
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //정규표현식
+
+            // 이메일 주소가 유효한지 확인
+            if(!emailRegex.test(email)){
+                errorMessage.style.display = "block" //오류 메세지 표시
+                return false; //폼 제출 방지
+            }
+            else{
+                errorMessage.style.display = "none"
+                return true;
+            }
+        }
+    </script>
+</body>
+</html>

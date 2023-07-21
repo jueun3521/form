@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>폼타입으로 검증</title>
+    <style>
+        *{
+    box-sizing: border-box;
+}
+.form-container{
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: antiquewhite;
+    padding: 20px;
+    border:  1px solid #ccc;
+    border-radius: 5px;
+}
+.form-container h2{
+    text-align: center;
+}
+.form-group{
+    margin-bottom: 15px;
+}
+.form-group label{
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+.form-group input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+label{
+    padding: 10px 0;
+}
+.submit{
+    width: 100%;
+    padding: 10px;
+    background-color: steelblue;
+    color:  #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.error-message{
+    display: none;
+    color: red;
+    margin-top: 5px;
+    font-size: 10px;
+}
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>폼 타입 검증</h2>
+        <!-- 이메일 -->
+        <form onsubmit="return validateEmailForm()">
+        <div class="form-group">
+            <label for="email">이메일:</label>
+            <input type="email" id="email" name="email" required placeholder="이메일 주소를 입력하세요">
+            <p class="error-message" id="email-error">올바른 이메일 주소를 입력하세요</p>
+        </div>
+        <button type="submit" class="submit">제출</button>
+        </form>
+
+        <!-- 전화번호 -->
+        <form onsubmit="return validateTelForm()">
+        <div class="form-group">
+            <label for="tel">전화번호:</label>
+            <input type="tel" id="tel" name="tel" required placeholder="전화번호를 입력하세요.예(010-1234-56478)">
+            <p class="error-message" id="tel-error">올바른 전화번호를 입력하세요</p>
+        </div>
+        <button type="submit" class="submit">제출</button>
+        </form>
+
+        <!-- url -->
+        <form onsubmit="return validateURLForm()">
+        <div class="form-group">
+            <label for="url">URL:</label>
+            <input type="url" id="url" name="url" required placeholder="유효한 URL을 입력하세요 (예: https://www.example.com)">
+            <p class="error-message" id="url-error">올바른 이메일 주소를 입력하세요</p>
+        </div>
+        <button type="submit" class="submit">제출</button>
+        </form>
+    </div>
+
+    <script>
+        // 이메일
+        function validateEmailForm() {
+            const emailInput = document.getElementById("email");
+            const errorMessage = document.getElementById("email-error");
+            const email = emailInput.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if(!emailRegex.test(email)){ //email을 테스트 했을 때 이메일에 대한 정규 표현식이 아닌 경우
+                errorMessage.style.display = "block"; //에러 메세지 출력
+                return false; //폼 제출방지
+            } else {
+                errorMessage.style.display = "none";
+                return true; //폼 제출 허용
+            }
+        }
+
+        // 전화번호
+        function validateTelForm() {
+            const telInput = document.getElementById("tel");
+            const errorMessage = document.getElementById("tel-error");
+            const tel = telInput.value;
+            const telRegex = /^\d{3}-\d{3,4}-\d{4}$/;   //전화번호 정규표현식
+
+            if(!telRegex.test(tel)){ //tel을 테스트 했을 때 이메일에 대한 정규 표현식이 아닌 경우
+                errorMessage.style.display = "block"; //에러 메세지 출력
+                return false; //폼 제출방지
+            } else {
+                errorMessage.style.display = "none";
+                return true; //폼 제출 허용
+            }
+        }
+
+        // URL
+        function validateURLForm() {
+            const urlInput = document.getElementById("url");
+            const errorMessage = document.getElementById("url-error");
+            const url =urlInput.value;
+            const urlRegex = /^(https?:\/\/)?([a-z\d.-]+\.[a-z]{2,})(:\d{2,5})?([/?].*)?$/i; //url 정규표현식
+
+            if(!urlRegex.test(url)){ //url을 테스트 했을 때 이메일에 대한 정규 표현식이 아닌 경우
+                errorMessage.style.display = "block"; //에러 메세지 출력
+                return false; //폼 제출방지
+            } else {
+                errorMessage.style.display = "none";
+                return true; //폼 제출 허용
+            }
+        }
+    </script>
+</body>
+</html>
